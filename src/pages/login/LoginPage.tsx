@@ -8,6 +8,7 @@ import { LoginCredentials } from '../../common/interfaces';
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../../features/slice/commonslice';
 import { useNavigate } from 'react-router-dom';
+import { handleError } from '../../utils/Snackbar/HandleError';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -26,20 +27,7 @@ const LoginPage = () => {
       }));
       navigate('/dashboard');
     } catch(error) {
-      let errorMessage = '';
-
-      if (error instanceof Error) {
-        errorMessage = t(`api.failed.${error.message}`);
-      } else if (typeof error === 'string') {
-        errorMessage = t(`api.failed.${error}`);
-      } else {
-        errorMessage = t('api.failed.unknown_error');
-      }
-        dispatch(setSnackbar({
-          isOpen: true,
-          message: errorMessage,
-          severity: 'error'
-        }));
+      handleError(error, t, dispatch);
     } finally {
       setIsLoading(false);
     }

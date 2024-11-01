@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material'
+import { Box } from '@mui/material'
 import React, { useState } from 'react'
 import { CustomButton } from '../../components/ui/CustomButton';
 import SendList from '../../components/SendList/SendList';
@@ -20,7 +20,7 @@ const Dashboard = () => {
     setActiveTab(index);
   };
   return (
-    <Container>
+    <>
       <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
         {tabs.map((tab, index) => (
           <CustomButton
@@ -33,7 +33,7 @@ const Dashboard = () => {
         ))}
       </Box>
       {tabs[activeTab].component}
-    </Container>
+    </>
   )
 }
 

@@ -26,3 +26,17 @@ export interface SendListFormResponse {
   success: boolean;
   message: string;
 }
+
+export interface ISendList {
+  uuid: string;
+  name: string;
+  postcard_title: string;
+  postcard_sentence: string;
+  postcard_end: string;
+}
+
+export interface SendListResponse {
+  output:ISendList[];
+  success: boolean;
+  message: string;
+}

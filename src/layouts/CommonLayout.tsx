@@ -3,9 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom'
 import { setSnackbar } from '../features/slice/commonslice';
 import { useTranslation } from 'react-i18next';
-import { CustomButton } from '../components/ui/CustomButton';
-import { Box, Container, Typography } from '@mui/material';
-import { logout } from '../utils/Auth/logout';
+import { Container } from '@mui/material';
+import Header from '../components/Header/Header';
 
 const CommonLayout = () => {
   const navigate = useNavigate();
@@ -23,34 +22,13 @@ const CommonLayout = () => {
     }
   },[]);
 
-  const handleLogout = () => {
-    if(logout()) {
-      navigate('login');
-    };
-  }
-
   return (
     <div>
-      <header>
-        <Container
-        sx = {{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        >
-          <Box>
-            <Typography component="h1" variant="h5">
-              {t('app_title')}
-            </Typography>
-          </Box>
-          <Box>
-            <CustomButton onClick={handleLogout}>ログアウト</CustomButton>
-          </Box>
-        </Container>
-      </header>
+      <Header />
       <main>
-        <Outlet />
+        <Container maxWidth="sm">
+          <Outlet />
+        </Container>
       </main>
     </div>
   )

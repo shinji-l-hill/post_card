@@ -1,4 +1,4 @@
-import { LoginCredentials, LoginResponse, SendListFormInputs, SendListFormResponse } from "../common/interfaces";
+import { LoginCredentials, LoginResponse, SendListFormInputs, SendListFormResponse, SendListResponse } from "../common/interfaces";
 import { axiosInstance } from "../plugins/axios";
 
 export async function loginApi(credentials: LoginCredentials): Promise<LoginResponse> {
@@ -13,5 +13,10 @@ export async function loginApi(credentials: LoginCredentials): Promise<LoginResp
 
 export async function registerSendList(data: SendListFormInputs): Promise<SendListFormResponse> {
   const response =  await axiosInstance.post(`/sendlist/register`, data);
+  return response.data;
+}
+
+export async function fetchSendList(): Promise<SendListResponse> {
+  const response =  await axiosInstance.get(`/sendlist`);
   return response.data;
 }

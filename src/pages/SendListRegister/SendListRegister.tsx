@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material'
+import { Box, Button, TextField, Typography } from '@mui/material'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { registerSendList } from '../../api/api';
 import { SendListFormInputs } from '../../common/interfaces';
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../../features/slice/commonslice';
+import { handleError } from '../../utils/Snackbar/HandleError';
 
 const SendListRegister = () => {
   const { t } = useTranslation();
@@ -31,25 +32,12 @@ const SendListRegister = () => {
       await registerSendList(data);  // APIにデータを送信する
       navigate('/dashboard');
     } catch (error) {
-      let errorMessage = '';
-
-      if (error instanceof Error) {
-        errorMessage = t(`api.failed.${error.message}`);
-      } else if (typeof error === 'string') {
-        errorMessage = t(`api.failed.${error}`);
-      } else {
-        errorMessage = t('api.failed.unknown_error');
-      }
-        dispatch(setSnackbar({
-          isOpen: true,
-          message: errorMessage,
-          severity: 'error'
-        }));
+      handleError(error, t, dispatch);
     }
   };
 
   return (
-    <Container>
+    <>
       <Box sx={{ mt: 4, mb: 2 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           {t('send_list.new_registration')}
@@ -64,7 +52,7 @@ const SendListRegister = () => {
             margin="normal"
           />
           <TextField
-            label={t('send_list.register.postcard_title')}
+            label={t('send_list.postcard_title')}
             {...register('postcard_title')}
             error={Boolean(errors.postcard_title)}
             helperText={errors.postcard_title?.message}
@@ -72,7 +60,7 @@ const SendListRegister = () => {
             margin="normal"
           />
           <TextField
-            label={t('send_list.register.postcard_sentence')}
+            label={t('send_list.postcard_sentence')}
             {...register('postcard_sentence')}
             error={Boolean(errors.postcard_sentence)}
             helperText={errors.postcard_sentence?.message}
@@ -82,7 +70,7 @@ const SendListRegister = () => {
             rows={4}
           />
           <TextField
-            label={t('send_list.register.postcard_end')}
+            label={t('send_list.postcard_end')}
             {...register('postcard_end')}
             error={Boolean(errors.postcard_end)}
             helperText={errors.postcard_end?.message}
@@ -102,7 +90,7 @@ const SendListRegister = () => {
           </Button>
         </form>
       </Box>
-    </Container>
+    </>
   );
 }
 

@@ -22,10 +22,12 @@
     "new_registration": "送付先新規登録",
     "register": {
       "name_required": "宛先は必須です",
-      "name": "宛先",
-      "postcard_title": "年賀状の見出し",
-      "postcard_sentence": "年賀状の本文",
-      "postcard_end": "年賀状の締め"
-    }
-  }
+      "name": "宛先"
+    },
+    "postcard_title": "年賀状の見出し",
+    "postcard_sentence": "年賀状の本文",
+    "postcard_end": "年賀状の締め"
+  },
+  "empty_data": "データがありません",
+  "empty_sentence": "文章が登録されていません"
 }
