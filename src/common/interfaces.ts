@@ -12,3 +12,17 @@ export interface LoginCredentials {
   email: string;
   password: string;
 }
+
+export interface SendListFormInputs {
+  name: string;
+  user_id: string;
+  postcard_title: string;
+  postcard_sentence: string;
+  postcard_end: string;
+}
+
+export interface SendListFormResponse {
+  output:SendListFormInputs;
+  success: boolean;
+  message: string;
+}

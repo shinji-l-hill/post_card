@@ -14,5 +14,18 @@
   "app_title":  "年賀状アプリ",
   "submit_login": "ログイン",
   "email": "メールアドレス",
-  "password": "パスワード"
+  "password": "パスワード",
+  "login_failed": "ログインしてください",
+  "resister": "新規登録",
+  "submit": "登録",
+  "send_list": {
+    "new_registration": "送付先新規登録",
+    "register": {
+      "name_required": "宛先は必須です",
+      "name": "宛先",
+      "postcard_title": "年賀状の見出し",
+      "postcard_sentence": "年賀状の本文",
+      "postcard_end": "年賀状の締め"
+    }
+  }
 }
