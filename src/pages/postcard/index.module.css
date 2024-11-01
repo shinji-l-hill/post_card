@@ -1,0 +1,71 @@
+.postcardContainer {
+  position: relative;
+  aspect-ratio: 1 / 1.48;
+  width: 92vw;
+  max-width: 400px;
+  perspective: 1000px;
+  transition: 0.6s;
+}
+
+.postcardContainer.rotate {
+  transform: rotateY(180deg);
+}
+
+.postcard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* 裏面を隠す */
+  transition: transform 0.6s ease;
+  box-shadow: 0 0 10px 6px rgb(0, 0, 0, 0.1);
+  animation: shadowFade 0.6s ease;
+}
+
+@keyframes shadowFade {
+  0% {
+    box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.1);
+  }
+  30% {
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.05);
+  }
+  50% {
+    box-shadow: none;
+  }
+  70% {
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.05);
+  }
+  100% {
+    box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 表面スタイル */
+.postcardFront {
+  background-color: white;
+  z-index: 2;
+  transform: rotateY(0deg); /* 初期状態で表面を表示 */
+  background-image: url(../../assets/images/front_template.png);
+  background-size: cover;
+}
+
+/* 裏面スタイル */
+.postcardBack {
+  background-color: white;
+  transform: rotateY(180deg); /* 裏面を反転させておく */
+}
+
+.postcardBack .text{
+  transform: rotateY(180deg); /* 裏面を反転させておく */
+}
+
+.postcardContainer.rotate .postcardFront {
+  transform: rotateY(180deg);
+  z-index: 2;
+}
+
+.postcardContainer.rotate .postcardBack {
+  transform: rotateY(0deg);
+  z-index: 1;
+}

@@ -1,0 +1,18 @@
+{
+  "api": {
+    "success": {
+      "S0001": "ログインに成功しました"
+    },
+    "failed": {
+      "E0001": "ログイン情報が間違っています"
+    }
+  },
+  "validation": {
+    "invalid_email": "正しい形式で入力してください",
+    "password_required": "パスワードは必須です"
+  },
+  "app_title":  "年賀状アプリ",
+  "submit_login": "ログイン",
+  "email": "メールアドレス",
+  "password": "パスワード"
+}

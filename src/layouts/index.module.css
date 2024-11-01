@@ -1,0 +1,17 @@
+.postcardHeader {
+  min-height: 10vh;
+}
+
+.postcardWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.postcardFooter {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
