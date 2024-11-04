@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, ListItemText } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import React, { useEffect, useState } from 'react'
@@ -6,11 +6,13 @@ import { CustomButton } from '../ui/CustomButton'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { fetchSendList } from '../../api/api'
-import { handleError } from '../../utils/Snackbar/HandleError'
 import { useDispatch } from 'react-redux'
 import { ISendList } from '../../common/interfaces'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TFunction } from 'i18next';
+import { setApiLoading, setSnackbar } from '../../features/slice/commonslice';
+import CustomLoading from '../ui/CustomApiLoading';
+import SendListBody from '../SendListBody/SendListBody';
 
 const SendList = () => {
   const { t } = useTranslation();
@@ -19,7 +21,7 @@ const SendList = () => {
   const [sendList, setSendList] = useState<ISendList[] | null>(null);
 
   const handleEdit = (uuid: string) => {
-    navigate(`sendlist/${uuid}/edit`);
+    navigate(`/sendlist/${uuid}/edit`);
   }
 
   const handleDelete = (uuid: string) => {
@@ -27,7 +29,7 @@ const SendList = () => {
   }
 
   const handleResister = () => {
-    navigate('/sendlist/new', { replace: true });
+    navigate('/sendlist/new');
   }
 
   const getSendListFields = (item: ISendList, t: TFunction) => [
@@ -40,18 +42,26 @@ const SendList = () => {
     try {
       const res = await fetchSendList();
       setSendList(res.output);
-    } catch(e) {
-      handleError(e, t, dispatch);
+    } catch(error) {
+      const errorMessage = t(`api.failed.${(error as Error).message}`);
+      dispatch(setSnackbar({
+        isOpen: true,
+        message: errorMessage,
+        severity: 'error'
+      }));
+    } finally {
+      dispatch(setApiLoading(false));  
     }
   }
 
   useEffect(() => {
+    dispatch(setApiLoading(true));
     fetchAndSetSendList();
   }, []);
 
   return (
     <Box>
-      <CustomButton variant='contained' onClick={handleResister}>
+      <CustomButton variant='contained' onClick={handleResister} sx={{marginBottom: 2}}>
         {t('resister')}
       </CustomButton>
       <Box>
@@ -79,27 +89,13 @@ const SendList = () => {
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
-              <List>
-                {getSendListFields(item, t).map((field, index) => (
-                  <React.Fragment key={index}>
-                    <ListItem sx={{ flexDirection: 'column', alignItems: 'flex-start', py: 2 }}>
-                      <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                        {field.label}
-                      </Typography>
-                      <Typography variant="body2" color={field.value ? 'textPrimary' : 'textSecondary'}>
-                        {field.value ?? t('empty_sentence')}
-                      </Typography>
-                    </ListItem>
-                    {index < 2 && <Divider component="li" />}
-                  </React.Fragment>
-                ))}
-              </List>
+                <SendListBody getListFields={getSendListFields} listItem={item}/>
               </AccordionDetails>
             </Accordion>
           ))}
           </Box>
         ) : (
-          <Typography>{t('empty_data')}</Typography>
+          <CustomLoading />
         )}
       </Box>
     </Box>
