@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
-const initialState: initialState = {
+const initialState: IinitialState = {
   isApiLoading: false,
   isCoverLoading: false,
   snackbar: {
@@ -11,7 +11,7 @@ const initialState: initialState = {
   },
 }
 
-interface initialState {
+interface IinitialState {
   isApiLoading: boolean;
   isCoverLoading: boolean;
   snackbar: SnackbarAction;
@@ -39,9 +39,9 @@ const commonSlice = createSlice({
 
     setCoverLoading(state, action: PayloadAction<boolean>) {
       state.isCoverLoading = action.payload
-    }
+    },
   }
 });
 
-export const { setCoverLoading, setSnackbar, setApiLoading } = commonSlice.actions;
+export const { setCoverLoading, setSnackbar, setApiLoading} = commonSlice.actions;
 export default commonSlice.reducer;

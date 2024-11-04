@@ -31,3 +31,8 @@ export async function editSendListDetail(id:string, data: SendListFormInputs): P
   const response =  await axiosInstance.post(`/sendlist/${id}/update`, data);
   return response.data;
 }
+
+export async function deleteSendList(id:string): Promise<SendListResponse> {
+  const response =  await axiosInstance.post(`/sendlist/${id}/delete`);
+  return response.data;
+}

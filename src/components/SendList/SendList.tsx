@@ -5,32 +5,60 @@ import React, { useEffect, useState } from 'react'
 import { CustomButton } from '../ui/CustomButton'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { fetchSendList } from '../../api/api'
+import { deleteSendList, fetchSendList } from '../../api/api'
 import { useDispatch } from 'react-redux'
 import { ISendList } from '../../common/interfaces'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TFunction } from 'i18next';
 import { setApiLoading, setSnackbar } from '../../features/slice/commonslice';
-import CustomLoading from '../ui/CustomApiLoading';
 import SendListBody from '../SendListBody/SendListBody';
+import CustomDialog from '../ui/CustomDialog';
+import CustomApiLoading from '../ui/CustomApiLoading';
 
 const SendList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sendList, setSendList] = useState<ISendList[] | null>(null);
+  const [deleteUuid, setDeleteUuid] = useState<string | null>(null);
 
   const handleEdit = (uuid: string) => {
     navigate(`/sendlist/${uuid}/edit`);
   }
 
-  const handleDelete = (uuid: string) => {
-    console.log(uuid);
+  const handleDelete = async () => {
+    if(deleteUuid) {
+      try {
+        const res = await deleteSendList(deleteUuid);
+        setSendList(res.output);
+        setIsDialogOpen(false);
+        setDeleteUuid('');
+        dispatch(setSnackbar({
+          isOpen: true,
+          message: t(`api.success.${res.message}`),
+          severity: 'success'
+        }));
+      } catch(error) {
+        const errorMessage = t(`api.failed.${(error as Error).message}`);
+        dispatch(setSnackbar({
+          isOpen: true,
+          message: errorMessage,
+          severity: 'error'
+        }));
+      }
+    }
   }
 
   const handleResister = () => {
     navigate('/sendlist/new');
   }
+
+  const openDeleteDialog = (event: React.MouseEvent, uuid: string) => {
+    event.stopPropagation();
+    setDeleteUuid(uuid);
+    setIsDialogOpen(true);
+  };
 
   const getSendListFields = (item: ISendList, t: TFunction) => [
     { label: t('send_list.postcard_title'), value: item.postcard_title },
@@ -82,7 +110,7 @@ const SendList = () => {
                   <IconButton
                     color="warning"
                     aria-label="delete"
-                    onClick={() => handleDelete(item.uuid)}
+                    onClick={(event: React.MouseEvent) => openDeleteDialog(event, item.uuid)}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -95,9 +123,16 @@ const SendList = () => {
           ))}
           </Box>
         ) : (
-          <CustomLoading />
+          <CustomApiLoading />
         )}
       </Box>
+      <CustomDialog
+        isOpen={isDialogOpen}
+        title='本当に削除しますか？'
+        text='削除すると元には戻せません'
+        onClose={() => setIsDialogOpen(false)}
+        onSubmit={handleDelete}
+      />
     </Box>
   )
 }
