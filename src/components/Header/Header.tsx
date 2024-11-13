@@ -1,5 +1,4 @@
 import { Box, Container, Typography } from '@mui/material'
-import React from 'react'
 import { CustomButton } from '../ui/CustomButton'
 import { logout } from '../../utils/Auth/logout'
 import { useNavigate } from 'react-router-dom'

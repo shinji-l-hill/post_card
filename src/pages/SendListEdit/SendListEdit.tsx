@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -41,9 +41,7 @@ const SendListEdit = () => {
   const fetchSendTargetData = async (id: string) => {
     try {
       const res = await fetchSendDetailData(id);
-      console.log(res);
       reset(res.output);
-
     } catch(error) {
       const errorMesage = t(`api.failed.${(error as Error).message}`);
       dispatch(setSnackbar({

@@ -21,12 +21,12 @@ function App() {
       <Routes>
         <Route path='login' element={<LoginPage />}></Route>
         <Route element={<CommonLayout />}>
-          <Route path='dashboard' element={<Dashboard />}></Route>
+          <Route path='dashboard/' element={<Dashboard />}></Route>
           <Route path='sendlist/new' element={<SendListRegister />}></Route>
           <Route path='sendlist/:id/edit' element={<SendListEdit />}></Route>
         </Route>
         <Route element={<PostCardLayout />}>
-          <Route path='/' element={<PostCard />}/>
+          <Route path='/postcard/:id' element={<PostCard />}/>
         </Route>
       </Routes>
       <CustomSnackbar open={isOpen} message={message} severity={severity}/>

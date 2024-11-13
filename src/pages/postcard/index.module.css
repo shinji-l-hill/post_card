@@ -1,3 +1,7 @@
+.postcarframe {
+  font-family: "Zen Antique Soft", serif;
+}
+
 .postcardContainer {
   position: relative;
   aspect-ratio: 1 / 1.48;
@@ -5,6 +9,10 @@
   max-width: 400px;
   perspective: 1000px;
   transition: 0.6s;
+}
+
+.name {
+  font-size: 40px;
 }
 
 .postcardContainer.rotate {

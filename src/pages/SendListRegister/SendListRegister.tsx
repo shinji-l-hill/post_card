@@ -1,5 +1,4 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
